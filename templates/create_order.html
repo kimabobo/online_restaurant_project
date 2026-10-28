@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Ваш кошик</h1>
+{% if cart %}
+<div class="card shadow-sm p-4">
+    <ul class="list-group mb-3">
+        {% for id, item in cart.items() %}
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+                <h6 class="my-0">{{ item.name }} (x{{ item.quantity }})</h6>
+                <small class="text-muted">{{ item.price }} грн / шт</small>
+            </div>
+            <span class="text-muted">{{ item.price * item.quantity }} грн</span>
+        </li>
+        {% endfor %}
+        <li class="list-group-item d-flex justify-content-between bg-light fw-bold">
+            <span>Разом:</span>
+            <span>{{ total_price }} грн</span>
+        </li>
+    </ul>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+            <a href="/menu" class="btn btn-outline-secondary me-2">Продовжити покупки</a>
+            <form action="{{ url_for('clear_cart') }}" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-outline-danger">Очистити кошик</button>
+            </form>
+        </div>
+        
+        {% if g.user %}
+            <form method="POST">
+                <button type="submit" class="btn btn-success btn-lg">Оформити замовлення</button>
+            </form>
+        {% else %}
+            <a href="/login" class="btn btn-warning">Увійдіть, щоб оформити замовлення</a>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">Кошик порожній. <a href="/menu">Переглянути меню</a></div>
+{% endif %}
+{% endblock %}

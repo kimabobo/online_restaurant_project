@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm p-4">
+            <h2 class="mb-4 text-center">Бронювання столика</h2>
+
+            {% if success %}
+            <div class="alert alert-success text-center">
+                Столик успішно заброньовано! Чекаємо на вас у нашій піцерії.
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Номер столика (1-10)</label>
+                    <input type="number" name="table_number" class="form-control" min="1" max="10" value="1" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Кількість гостей</label>
+                    <input type="number" name="guests_count" class="form-control" min="1" max="12" value="2" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Дата та час візиту</label>
+                    <input type="datetime-local" name="reservation_time" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Забронювати</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

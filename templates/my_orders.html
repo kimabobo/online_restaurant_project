@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Мої замовлення</h1>
+
+{% if orders %}
+<div class="table-responsive bg-white rounded shadow-sm p-3">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+            <tr>
+                <th>Номер</th>
+                <th>Дата та час</th>
+                <th>Сума</th>
+                <th>Статус</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td><strong>#{{ order.id }}</strong></td>
+                <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                <td>{{ order.total_amount }} грн</td>
+                <td><span class="badge bg-primary">{{ order.status }}</span></td>
+                <td>
+                    <a href="{{ url_for('my_order', id=order.id) }}" class="btn btn-sm btn-outline-primary me-2">Деталі</a>
+                    <form action="{{ url_for('cancel_order', id=order.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Скасувати</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    У вас ще немає замовлень. <a href="/menu">Перейти до меню</a>
+</div>
+{% endif %}
+{% endblock %}

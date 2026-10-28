@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="mb-3">
+            <a href="/menu" class="btn btn-outline-secondary btn-sm">
+                ← Назад до меню
+            </a>
+        </div>
+
+        <div class="card shadow-sm p-4">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    {% if item.image %}
+                        <img src="{{ item.image }}" class="img-fluid rounded" alt="{{ item.name }}" style="max-height: 320px; object-fit: cover; width: 100%;">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 d-flex flex-column justify-content-between">
+                    <div>
+                        <span class="badge bg-secondary mb-2">{{ item.category }}</span>
+                        <h2 class="card-title">{{ item.name }}</h2>
+                        <p class="text-muted">{{ item.description }}</p>
+
+                        {% if item.ingredients %}
+                            <p class="small"><strong>Склад:</strong> {{ item.ingredients }}</p>
+                        {% endif %}
+
+                        {% if item.weight %}
+                            <p class="small text-muted"><strong>Вага / Об'єм:</strong> {{ item.weight }} г/мл</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="fs-4 fw-bold text-success">{{ item.price }} грн</span>
+                        <form action="/add_to_cart/{{ item.id }}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-primary">
+                                Додати у кошик
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
